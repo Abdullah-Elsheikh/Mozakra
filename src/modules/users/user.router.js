@@ -33,7 +33,7 @@ userRouter.post('/admin/users',
 );
 
 //login 
-userRouter.get('/login',
+userRouter.post('/login',
     isValid(LoginVal),
     asyncHandler(login)
 
