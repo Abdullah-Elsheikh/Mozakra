@@ -26,7 +26,7 @@ function adminKeyGuard(req, res, next) {
   return next();
 }
 // add users
-userRouter.post('/admin/users',
+userRouter.post('/users',
     adminLimiter,
   adminKeyGuard,
   asyncHandler(addUsers)
@@ -40,7 +40,7 @@ userRouter.post('/login',
 );
 
 // add user only admin
-userRouter.post('/users',
+userRouter.post('/admin/users',
    isAuthentication(),
     isAuthorization([roles.ADMIN]),
     asyncHandler(addUserByAdmin)
