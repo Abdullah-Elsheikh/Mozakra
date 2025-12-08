@@ -1,7 +1,7 @@
 import { Router } from "express";
 import rateLimit from "express-rate-limit";
 import { asyncHandler } from "../../middleware/asyncHandler.js";
-import { addUserByAdmin, addUsers, login, updatePasswordByAdmin, updateUserByAdmin } from "./user.controller.js";
+import { addUserByAdmin, addUsers, getUserById, login, updatePasswordByAdmin, updateUserByAdmin } from "./user.controller.js";
 import { isAuthentication } from "../../middleware/authentication.js";
 import { isAuthorization } from "../../middleware/authorization.js";
 import { isValid } from "../../middleware/validation.js";
@@ -44,6 +44,12 @@ userRouter.post('/admin/users',
    isAuthentication(),
     isAuthorization([roles.ADMIN]),
     asyncHandler(addUserByAdmin)
+);
+
+// get user by id
+userRouter.get('/users/:id',
+  isAuthentication(),
+  asyncHandler(getUserById)
 );
 
 // update password by admin

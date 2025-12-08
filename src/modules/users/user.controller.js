@@ -77,6 +77,16 @@ const addUserByAdmin = async (req, res) => {
      });
 };
 
+//get user by id
+const getUserById = async(req,res,next)=>{
+  const { id } = req.params;
+  const user = await User.findById(id).select("-password");
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  res.status(200).json(user);
+};
+
 //update password by admin
 const updatePasswordByAdmin = async(req,res,next)=>{
   const { userName } = req.body;
@@ -104,4 +114,4 @@ const updateUserByAdmin = async(req,res,next)=>{
   res.status(200).json({ message: "User updated successfully" });
 };
 
-  export { addUsers , login , addUserByAdmin , updatePasswordByAdmin , updateUserByAdmin };
+  export { addUsers , login , addUserByAdmin , updatePasswordByAdmin , updateUserByAdmin , getUserById };
