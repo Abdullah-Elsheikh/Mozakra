@@ -1,7 +1,7 @@
 import { Router } from "express";
 import rateLimit from "express-rate-limit";
 import { asyncHandler } from "../../middleware/asyncHandler.js";
-import { addUserByAdmin, addUsers, login, updatePasswordByAdmin } from "./user.controller.js";
+import { addUserByAdmin, addUsers, login, updatePasswordByAdmin, updateUserByAdmin } from "./user.controller.js";
 import { isAuthentication } from "../../middleware/authentication.js";
 import { isAuthorization } from "../../middleware/authorization.js";
 import { isValid } from "../../middleware/validation.js";
@@ -52,6 +52,13 @@ userRouter.put('/update-password',
   isAuthorization([roles.ADMIN]),
   isValid(UpdatePasswordByAdminVal),
   asyncHandler(updatePasswordByAdmin)
-)
+);
+
+//upate user
+userRouter.put('/users/:id',
+  isAuthentication(),
+  isAuthorization([roles.ADMIN]),
+  asyncHandler(updateUserByAdmin)
+);
 
 export default userRouter;

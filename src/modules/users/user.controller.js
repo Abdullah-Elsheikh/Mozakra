@@ -87,4 +87,18 @@ const updatePasswordByAdmin = async(req,res,next)=>{
   res.status(200).json({ message: "Password updated successfully" });
 };
 
-  export { addUsers , login , addUserByAdmin , updatePasswordByAdmin };
+//upate user by admin
+const updateUserByAdmin = async(req,res,next)=>{
+  const { id } = req.params;
+  const { name, phone } = req.body;
+  const user = await User.findById(id);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  user.name = name;
+  user.phone = phone;
+  await user.save();
+  res.status(200).json({ message: "User updated successfully" });
+};
+
+  export { addUsers , login , addUserByAdmin , updatePasswordByAdmin , updateUserByAdmin };
