@@ -68,6 +68,7 @@ const addUserByAdmin = async (req, res) => {
   const hash = await bcrypt.hash(password, 12);
   const doc = await User.create({ userName, name, roles:"student",password: hash, phone });
   res.status(201).json({ 
+    message: "User created successfully",
     id: doc._id,
      userName: doc.userName ,
      name: doc.name,
