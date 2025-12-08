@@ -10,6 +10,7 @@ export const generalFildes = {
   password: joi.string() .required().pattern(/^[A-Z][A-Za-z0-9]{2,40}/),
   rePassword: joi.valid(joi.ref("newPassword")).required(),
   newPassword: joi.string() .required().pattern(/^[A-Z][A-Za-z0-9]{2,40}/),
+  phone:joi.string() .pattern(/^(\+?20|0)?1[0-2,5][0-9]{8}$/).messages({ "string.pattern.base": "Invalid Egyptian phone number format.", }),
   age: joi.number().min(8).max(70),
   industries: joi.array().items(joi.string()),
   workEnvironment: joi.string(),
