@@ -48,7 +48,6 @@ userRouter.post('/admin/users',
 
 // get user by id
 userRouter.get('/users/:id',
-  isAuthentication(),
   asyncHandler(getUserById)
 );
 
