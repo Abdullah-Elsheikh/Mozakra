@@ -48,6 +48,8 @@ userRouter.post('/admin/users',
 
 // get user by id
 userRouter.get('/users/:id',
+  isAuthentication(),
+  isAuthorization([roles.STUDENT]),
   asyncHandler(getUserById)
 );
 
