@@ -62,16 +62,17 @@ const login = async (req, res, next) => {
 
 //add user only admin
 const addUserByAdmin = async (req, res) => {
-  const { userName,name, password} = req.body;
+  const { userName,name, password, phone } = req.body;
   const userExists = await User.findOne({ userName });
   if (userExists) return res.status(409).json({ message: "Username exists" });
   const hash = await bcrypt.hash(password, 12);
-  const doc = await User.create({ userName, name, roles:"student",password: hash });
+  const doc = await User.create({ userName, name, roles:"student",password: hash, phone });
   res.status(201).json({ 
     id: doc._id,
      userName: doc.userName ,
      name: doc.name,
-      roles: doc.roles
+      roles: doc.roles,
+      phone: doc.phone
      });
 };
 
