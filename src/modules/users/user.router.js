@@ -32,13 +32,45 @@ userRouter.post('/users',
   asyncHandler(addUsers)
 );
 
+/**
+ * @swagger
+ * /api/login:
+ *   post:
+ *     summary: User login
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login success
+ */
 //login 
 userRouter.post('/login',
     isValid(LoginVal),
     asyncHandler(login)
 
 );
-
+/**
+ * @swagger
+ * /api/admin/users:
+ *   post:
+ *     summary: Add user by admin
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: User added
+ */
 // add user only admin
 userRouter.post('/admin/users',
    isAuthentication(),
@@ -53,6 +85,20 @@ userRouter.get('/users/:id',
   asyncHandler(getUserById)
 );
 
+/**
+ * @swagger
+ * /api/update-password:
+ *   put:
+ *     summary: Update password by admin
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *     responses:
+ *       200:
+ *         description: Password updated
+ */
 // update password by admin
 userRouter.put('/update-password',
   isAuthentication(),

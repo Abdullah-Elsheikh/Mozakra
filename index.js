@@ -29,9 +29,24 @@ const swaggerSpec = swaggerJsdoc({
     servers: [
       { url: process.env.BASE_URL || "http://localhost:3000" },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   apis: [path.join(__dirname, "src/modules/**/*.js")],
 });
+
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
