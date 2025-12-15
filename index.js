@@ -1,24 +1,51 @@
 import express from 'express';
+import swaggerUi from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
 import dotenv from 'dotenv';
 import path from 'path';
+import { fileURLToPath } from "url";
 import { connectDB } from './db/connection.js';
 import userRouter from './src/modules/users/user.router.js';
 import courseRouter from './src/modules/course/course.router.js';
 import commentRouter from './src/modules/comment/comment.router.js';
 
+dotenv.config({ path: path.resolve('./config/.env') });
 
-// create server
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
+console.log("THIS INDEX.JS IS RUNNING");
+
 app.use(express.json());
-dotenv.config({path : path.resolve('./config/.env')});
-const PORT = process.env.PORT || 3000;
-//connect db
-connectDB()
-//parse Routes
-app.use('/api',userRouter)
-app.use('/api',courseRouter)
-app.use('/api',commentRouter)
-//listen server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+
+const swaggerSpec = swaggerJsdoc({
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Courses API",
+      version: "1.0.0",
+    },
+    servers: [
+      { url: process.env.BASE_URL || "http://localhost:3000" },
+    ],
+  },
+  apis: [path.join(__dirname, "src/modules/**/*.js")],
+});
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.get("/", (req, res) => {
+  res.send("API is running on Railway");
+});
+
+connectDB();
+
+app.use('/api', userRouter);
+app.use('/api', courseRouter);
+app.use('/api', commentRouter);
+
+const PORT = process.env.PORT;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("Server running on port", PORT);
 });
