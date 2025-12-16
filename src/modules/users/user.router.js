@@ -45,7 +45,7 @@ userRouter.post('/users',
  *           schema:
  *             type: object
  *             properties:
- *               email:
+ *               userName:
  *                 type: string
  *               password:
  *                 type: string
