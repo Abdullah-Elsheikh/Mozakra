@@ -8,6 +8,8 @@ import { connectDB } from './db/connection.js';
 import userRouter from './src/modules/users/user.router.js';
 import courseRouter from './src/modules/course/course.router.js';
 import commentRouter from './src/modules/comment/comment.router.js';
+import chatRouter from './src/modules/chat/chat.router.js';
+
 
 dotenv.config({ path: path.resolve('./config/.env') });
 
@@ -15,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-console.log("THIS INDEX.JS IS RUNNING");
+
 
 app.use(express.json());
 
@@ -59,7 +61,7 @@ connectDB();
 app.use('/api', userRouter);
 app.use('/api', courseRouter);
 app.use('/api', commentRouter);
-
+app.use('/api',chatRouter)
 const PORT = process.env.PORT;
 app.listen(PORT, "0.0.0.0", () => {
   console.log("Server running on port", PORT);

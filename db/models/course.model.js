@@ -8,7 +8,7 @@ const courseSchema = new Schema({
   pdfPublicId: { type: String, default: null }
 }, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
-// Virtual populate: كل تعليقات هذا الكورس عبر courseId
+
 courseSchema.virtual("comments", {
   ref: "Comment",
   localField: "_id",
