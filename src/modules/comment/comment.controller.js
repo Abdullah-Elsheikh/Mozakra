@@ -7,7 +7,7 @@ const createComment = async (req, res, next) => {
     const { courseId } = req.params;     
     const userId = req.authUser._id;           
     const comment = await Comment.create({
-      description: description.trim(),
+      description,
       courseId,
       userId
     }); 

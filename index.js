@@ -18,7 +18,6 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-
 app.use(express.json());
 
 const swaggerSpec = swaggerJsdoc({
@@ -52,9 +51,7 @@ const swaggerSpec = swaggerJsdoc({
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.get("/", (req, res) => {
-  res.send("API is running on Railway");
-});
+
 
 connectDB();
 
