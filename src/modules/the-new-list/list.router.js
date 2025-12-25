@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { uploudList } from "./list.controller.js";
+import { getLists, uploudList } from "./list.controller.js";
 import { isAuthentication } from "../../middleware/authentication.js";
 import { isAuthorization } from "../../middleware/authorization.js";
 import { asyncHandler } from "../../middleware/asyncHandler.js";
@@ -13,8 +13,12 @@ listRouter.post('/list-upload',
     isAuthorization([roles.ADMIN]),
     cloudUpload({allowTypes:['application/pdf']}).single('pdf'),
     asyncHandler(uploudList)
+)
 
-
+listRouter.get('/list',
+    isAuthentication(),
+    isAuthorization([roles.ADMIN, roles.STUDENT]),
+    asyncHandler(getLists)
 )
 
 export default listRouter;

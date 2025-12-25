@@ -34,3 +34,8 @@ export const uploudList = async(req,res,next)=>{
     streamifier.createReadStream(req.file.buffer).pipe(stream);
     
 }
+
+export const getLists = async(req,res,next)=>{
+    const lists = await List.find().select('name pdfUrl');
+    return res.status(200).json({ lists });
+}
