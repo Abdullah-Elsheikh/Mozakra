@@ -11,9 +11,9 @@ const uploudCourse = async(req,res,next)=>{
 
     const stream = cloudinary.uploader.upload_stream(
       { 
-        resource_type: "auto",
+        resource_type: "raw",
          folder: "mozakar/courses",
-         format: "pdf",
+         access_mode: "public",
          },
       
       async (err, result) => {
