@@ -10,6 +10,7 @@ import courseRouter from './src/modules/course/course.router.js';
 import commentRouter from './src/modules/comment/comment.router.js';
 import chatRouter from './src/modules/chat/chat.router.js';
 import listRouter from './src/modules/the-new-list/list.router.js';
+import noteRouter from './src/modules/note/note.router.js';
 
 
 dotenv.config({ path: path.resolve('./config/.env') });
@@ -61,6 +62,7 @@ app.use('/api', courseRouter);
 app.use('/api', commentRouter);
 app.use('/api',chatRouter)
 app.use('/api',listRouter)
+app.use('/api',noteRouter)
 const PORT = process.env.PORT;
 app.listen(PORT, "0.0.0.0", () => {
   console.log("Server running on port", PORT);
