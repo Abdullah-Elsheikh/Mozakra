@@ -3,7 +3,7 @@ import { isAuthentication } from "../../middleware/authentication.js";
 import { isAuthorization } from "../../middleware/authorization.js";
 import { roles } from "../../../utils/enum.js";
 import { asyncHandler } from "../../middleware/asyncHandler.js";
-import { addNote, getNotes } from "./note.controller.js";
+import { addNote, deleteNote, getNotes, updateNote } from "./note.controller.js";
 
 
 const noteRouter = Router();
@@ -21,4 +21,18 @@ noteRouter.get('/get-notes',
     asyncHandler(getNotes)
 )
 
+//update Note   
+noteRouter.put('/update-note/:noteId',
+    isAuthentication(),
+    isAuthorization([roles.STUDENT]),
+    asyncHandler(updateNote)
+)
+
+
+//delete Note
+noteRouter.delete('/delete-note/:noteId',
+    isAuthentication(), 
+    isAuthorization([roles.STUDENT]),
+    asyncHandler(deleteNote)
+)
 export default noteRouter;

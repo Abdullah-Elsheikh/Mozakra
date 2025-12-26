@@ -2,27 +2,24 @@
 import { deleteCloudFile } from "./cloud.js"
 
  export class AppError extends Error {
-    constructor(message , statusCode){
+    constructor(message, statusCode = 500) {
         super(message)
-        this.statusCode =statusCode
+        this.statusCode = statusCode
     }
 }
 
-export const globaleErrorHandling =async (err , req , res , next)=>{
-   
-    // rollback cloud image
-    if(req.failImage){
-       await deleteCloudFile(req.failImage.public_Id)
-    }
-    if(req.failImage?.lengt>0){
-        for(const public_id of req.failImage){
+
+export const globaleErrorHandling = async (err, req, res, next) => {
+
+    // rollback cloud images
+    if (Array.isArray(req.failImage) && req.failImage.length > 0) {
+        for (const public_id of req.failImage) {
             await deleteCloudFile(public_id)
         }
-            
-        }
-     return res.status(err.statusCode || 500 ).json({
-        message : err.message,
-        success : false
-     })
+    }
 
+    return res.status(err.statusCode || 500).json({
+        success: false,
+        message: err.message
+    })
 }
